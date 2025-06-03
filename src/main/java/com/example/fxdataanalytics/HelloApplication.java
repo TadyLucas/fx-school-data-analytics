@@ -65,9 +65,9 @@ public class HelloApplication extends Application {
                 vyberVbox.getChildren().clear();
 
                 // Loop through all okresy
-                for (int i = 0; i <Config.OKRESY.length+1; i++) {
+                int length = Config.OKRESY.length;
+                for (int i = 0; i <length; i++) {
                     Okres okres = Config.OKRESY[i];
-
                     // If krajId matches the selected kraj id, add a radio button
                     if (okres.getId() == selectedKrajId) {
                         RadioButton okresButton = new RadioButton(okres.getNazev());
@@ -83,10 +83,12 @@ public class HelloApplication extends Application {
             if(newValue != null) {
                 int selectedOkresId = (Integer) newValue.getUserData();
                 vyberVbox.getChildren().clear();
-                Okres okres = Config.OKRESY[selectedOkresId];
+                Okres okres = Config.OKRESY[selectedOkresId - 1];
 
 
                 for(int i=0; i<Config.VYBERY.length; i++) {
+//                    System.out.println(okres.getNazev());
+//                    System.out.printf("Okres: %d, %d, %s\n", i, okres.getId(), okres.getNazev());
                     RadioButton vyber = new RadioButton(Config.VYBERY[i]);
                     vyberVbox.getChildren().add(vyber);
                     vyber.setUserData(new VyberData(selectedOkresId-1, i*3));
@@ -104,7 +106,7 @@ public class HelloApplication extends Application {
 
                 int selectedOkresId = data.getId();
                 int n = data.getVyber();
-                System.out.println(n);
+//                System.out.println(n);
                 Okres okres = Config.OKRESY[selectedOkresId];
                 int[] value = okres.getHodnoty();
                 // Make sure the array has enough values
